@@ -83,8 +83,6 @@ while True:
                 
                 short_info = "".join(intro)
                 print(f'Here is a short information about {country_name}:\n{short_info}')
-            else:
-                print("The country you entered does not exist. Please try again.")
         except requests.exceptions.RequestException as e:
             print("An error occurred while trying to access the website. Please try again.")
             print(e)
