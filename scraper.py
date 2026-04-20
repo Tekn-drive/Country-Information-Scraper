@@ -53,7 +53,12 @@ while True:
     if country_name not in valid_countries and country_name != "exit":
         print("The country you entered does not exist. Please try again.")
     elif country_name in valid_countries and country_name != "exit":
-        obtained_url = "https://en.wikipedia.org/wiki/" + quote(country_name)
+        country_name_parts = len(country_name.split())
+        if country_name_parts > 1:
+            temp_name = country_name.replace(" ", "_")
+
+        obtained_url = "https://en.wikipedia.org/wiki/" + quote(temp_name if country_name_parts>1 else country_name)
+        print(obtained_url)
         try:
             response = requests.get(obtained_url, headers=headers)
             if response.status_code == 200:
@@ -68,7 +73,7 @@ while True:
                     text = p.get_text().strip()
                     text = re.sub(r'\[[a-zA-Z0-9\s]+\]', '', text)
                     if text:
-                        if text.startswith(country_name):
+                        if text.startswith(country_name) or text.startswith("The " + country_name) or text.startswith("It is") or text.startswith("This country") or text.startswith("This nation"):
                             started = True
                         if started:
                             intro.append(text)
